@@ -36,9 +36,15 @@ export interface ModelInfo {
   description?: string
 }
 
+// Locale type
+export type Locale = 'zh' | 'en'
+
 interface SettingsState {
   // Active provider
   activeProvider: ProviderId
+  
+  // Locale setting
+  locale: Locale
   
   // API Keys (provider id -> api key)
   apiKeys: Record<string, string>
@@ -60,6 +66,7 @@ interface SettingsState {
   
   // Actions
   setActiveProvider: (provider: ProviderId) => void
+  setLocale: (locale: Locale) => void
   setApiKey: (provider: ProviderId, key: string) => void
   setBaseUrl: (provider: ProviderId, url: string) => void
   setSelectedModel: (provider: ProviderId, model: string) => void
@@ -92,6 +99,7 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set, get) => ({
       activeProvider: 'google',
+      locale: 'zh',
       apiKeys: {},
       baseUrls: {},
       selectedModels: {},
@@ -100,6 +108,12 @@ export const useSettingsStore = create<SettingsState>()(
       error: null,
       
       setActiveProvider: (provider) => set({ activeProvider: provider, error: null }),
+      
+      setLocale: (locale) => {
+        set({ locale })
+        // Set cookie for server-side access
+        document.cookie = `locale=${locale};path=/;max-age=31536000`
+      },
       
       setApiKey: (provider, key) => set((state) => ({
         apiKeys: { ...state.apiKeys, [provider]: key },
@@ -155,6 +169,7 @@ export const useSettingsStore = create<SettingsState>()(
       // Only persist these fields
       partialize: (state) => ({
         activeProvider: state.activeProvider,
+        locale: state.locale,
         apiKeys: state.apiKeys,
         baseUrls: state.baseUrls,
         selectedModels: state.selectedModels,

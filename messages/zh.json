@@ -1,0 +1,87 @@
+{
+  "common": {
+    "appName": "next-g-prompt",
+    "save": "保存",
+    "cancel": "取消",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "edit": "编辑",
+    "dismiss": "关闭"
+  },
+  "nav": {
+    "newPrompt": "+ 新建提示词",
+    "menu": "菜单",
+    "myPrompts": "我的提示词",
+    "collections": "收藏夹",
+    "settings": "设置"
+  },
+  "dashboard": {
+    "title": "我的提示词",
+    "description": "创建和管理您的提示词模板",
+    "newPrompt": "+ 新建提示词",
+    "noPrompts": "暂无提示词",
+    "noPromptsHint": "创建您的第一个提示词模板来开始。使用类似 {{topic}} 的变量使其可重复使用。",
+    "createFirst": "创建您的第一个提示词"
+  },
+  "editor": {
+    "untitled": "无标题提示词",
+    "unsaved": "未保存",
+    "copy": "📋 复制",
+    "copied": "✓ 已复制!",
+    "saving": "保存中...",
+    "savePrompt": "💾 保存提示词",
+    "discardConfirm": "确定要放弃未保存的更改吗？",
+    "unexpectedError": "发生意外错误"
+  },
+  "collections": {
+    "title": "收藏夹",
+    "description": "将您的提示词整理到收藏夹中",
+    "newCollection": "+ 新建收藏夹",
+    "comingSoon": "即将推出",
+    "comingSoonHint": "收藏夹功能正在开发中。您将能够把提示词整理到文件夹中。",
+    "backToDashboard": "返回仪表盘"
+  },
+  "settings": {
+    "title": "设置",
+    "description": "配置您的 AI 提供商和 API 设置",
+    "provider": {
+      "title": "AI 提供商",
+      "description": "选择您偏好的 AI 提供商"
+    },
+    "api": {
+      "title": "API 配置",
+      "description": "配置您的 {provider} API 设置",
+      "apiKey": "API 密钥",
+      "apiKeyPlaceholder": "输入您的 API 密钥",
+      "apiKeyHint": "您的 API 密钥仅存储在本地，不会发送到我们的服务器",
+      "baseUrl": "基础 URL",
+      "default": "默认值",
+      "saveConfig": "保存配置"
+    },
+    "model": {
+      "title": "模型选择",
+      "description": "选择用于生成的模型",
+      "fetchFirst": "请先获取模型",
+      "selectModel": "选择模型",
+      "refresh": "刷新",
+      "modelsAvailable": "{count} 个模型可用",
+      "enterApiKeyFirst": "请先输入 API 密钥"
+    },
+    "currentConfig": {
+      "title": "当前配置",
+      "provider": "提供商",
+      "apiKey": "API 密钥",
+      "model": "模型",
+      "notConfigured": "未配置",
+      "notSelected": "未选择"
+    },
+    "language": {
+      "title": "语言设置",
+      "description": "选择您偏好的界面语言",
+      "label": "界面语言",
+      "zh": "中文",
+      "en": "English"
+    }
+  }
+}

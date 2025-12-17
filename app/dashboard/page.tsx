@@ -1,35 +1,66 @@
+'use client'
+
 import Link from "next/link"
 import { getPrompts } from "@/app/actions/prompt"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DeletePromptButton } from "@/components/dashboard/delete-button"
+import { useTranslations } from 'next-intl'
+import { useEffect, useState } from 'react'
 
-export default async function DashboardPage() {
-  const prompts = await getPrompts()
+interface Prompt {
+  id: string
+  title: string
+  content: string
+  tags: string | null
+  updatedAt: Date
+}
+
+export default function DashboardPage() {
+  const t = useTranslations('dashboard')
+  const tCommon = useTranslations('common')
+  const [prompts, setPrompts] = useState<Prompt[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getPrompts().then((data) => {
+      setPrompts(data)
+      setLoading(false)
+    })
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex-1 p-8 pt-6 overflow-y-auto">
+        <div className="h-8 w-48 bg-slate-200 dark:bg-slate-800 rounded animate-pulse mb-8" />
+        <div className="h-64 bg-slate-200 dark:bg-slate-800 rounded animate-pulse" />
+      </div>
+    )
+  }
 
   return (
     <div className="flex-1 p-8 pt-6 overflow-y-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">My Prompts</h2>
+          <h2 className="text-3xl font-bold tracking-tight">{t('title')}</h2>
           <p className="text-muted-foreground mt-1">
-            Create and manage your prompt templates
+            {t('description')}
           </p>
         </div>
         <Link href="/dashboard/new">
-          <Button>+ New Prompt</Button>
+          <Button>{t('newPrompt')}</Button>
         </Link>
       </div>
 
       {prompts.length === 0 ? (
         <div className="flex flex-col items-center justify-center p-12 border border-dashed rounded-xl h-[400px] bg-slate-50/50 dark:bg-slate-900/20">
           <div className="text-5xl mb-4">📝</div>
-          <h3 className="font-semibold text-lg mb-2">No prompts yet</h3>
+          <h3 className="font-semibold text-lg mb-2">{t('noPrompts')}</h3>
           <p className="text-muted-foreground text-sm mb-6 text-center max-w-sm">
-            Create your first prompt template to get started. Use variables like {`{{topic}}`} to make them reusable.
+            {t('noPromptsHint')}
           </p>
           <Link href="/dashboard/new">
-            <Button size="lg">Create Your First Prompt</Button>
+            <Button size="lg">{t('createFirst')}</Button>
           </Link>
         </div>
       ) : (
@@ -66,7 +97,7 @@ export default async function DashboardPage() {
                   </span>
                   <Link href={`/dashboard/edit/${prompt.id}`}>
                     <Button variant="link" size="sm" className="h-auto p-0 text-xs">
-                      Edit →
+                      {tCommon('edit')} →
                     </Button>
                   </Link>
                 </div>
@@ -78,4 +109,3 @@ export default async function DashboardPage() {
     </div>
   )
 }
-

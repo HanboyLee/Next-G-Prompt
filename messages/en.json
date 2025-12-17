@@ -1,0 +1,87 @@
+{
+  "common": {
+    "appName": "next-g-prompt",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "edit": "Edit",
+    "dismiss": "Dismiss"
+  },
+  "nav": {
+    "newPrompt": "+ New Prompt",
+    "menu": "Menu",
+    "myPrompts": "My Prompts",
+    "collections": "Collections",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "My Prompts",
+    "description": "Create and manage your prompt templates",
+    "newPrompt": "+ New Prompt",
+    "noPrompts": "No prompts yet",
+    "noPromptsHint": "Create your first prompt template to get started. Use variables like {{topic}} to make them reusable.",
+    "createFirst": "Create Your First Prompt"
+  },
+  "editor": {
+    "untitled": "Untitled Prompt",
+    "unsaved": "Unsaved",
+    "copy": "📋 Copy",
+    "copied": "✓ Copied!",
+    "saving": "Saving...",
+    "savePrompt": "💾 Save Prompt",
+    "discardConfirm": "Discard unsaved changes?",
+    "unexpectedError": "An unexpected error occurred"
+  },
+  "collections": {
+    "title": "Collections",
+    "description": "Organize your prompts into collections",
+    "newCollection": "+ New Collection",
+    "comingSoon": "Coming Soon",
+    "comingSoonHint": "Collections feature is under development. You'll be able to organize your prompts into folders.",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your AI provider and API settings",
+    "provider": {
+      "title": "AI Provider",
+      "description": "Select your preferred AI provider"
+    },
+    "api": {
+      "title": "API Configuration",
+      "description": "Configure your {provider} API settings",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "Enter your API key",
+      "apiKeyHint": "Your API key is stored locally and never sent to our servers",
+      "baseUrl": "Base URL",
+      "default": "Default",
+      "saveConfig": "Save Configuration"
+    },
+    "model": {
+      "title": "Model Selection",
+      "description": "Choose the model to use for generation",
+      "fetchFirst": "Fetch models first",
+      "selectModel": "Select a model",
+      "refresh": "Refresh",
+      "modelsAvailable": "{count} models available",
+      "enterApiKeyFirst": "Please enter an API Key first"
+    },
+    "currentConfig": {
+      "title": "Current Configuration",
+      "provider": "Provider",
+      "apiKey": "API Key",
+      "model": "Model",
+      "notConfigured": "Not configured",
+      "notSelected": "Not selected"
+    },
+    "language": {
+      "title": "Language Settings",
+      "description": "Select your preferred interface language",
+      "label": "Interface Language",
+      "zh": "中文",
+      "en": "English"
+    }
+  }
+}

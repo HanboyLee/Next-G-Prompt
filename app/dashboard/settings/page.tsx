@@ -19,8 +19,11 @@ import {
   type ProviderId,
   type ModelInfo,
 } from '@/store/use-settings-store'
+import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher'
+import { useTranslations } from 'next-intl'
 
 export default function SettingsPage() {
+  const t = useTranslations('settings')
   const {
     activeProvider,
     setActiveProvider,
@@ -62,7 +65,7 @@ export default function SettingsPage() {
     const baseUrl = localBaseUrl || getActiveBaseUrl()
     
     if (!apiKey) {
-      setError('Please enter an API Key first')
+      setError(t('model.enterApiKeyFirst'))
       return
     }
 
@@ -93,6 +96,7 @@ export default function SettingsPage() {
     setSelectedModel,
     setIsLoadingModels,
     setError,
+    t,
   ])
 
   // Save configuration
@@ -125,18 +129,34 @@ export default function SettingsPage() {
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
           <p className="text-muted-foreground">
-            Configure your AI provider and API settings
+            {t('description')}
           </p>
         </div>
+
+        {/* Language Settings */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('language.title')}</CardTitle>
+            <CardDescription>
+              {t('language.description')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <Label>{t('language.label')}</Label>
+              <LanguageSwitcher className="w-full" />
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Provider Selection */}
         <Card>
           <CardHeader>
-            <CardTitle>AI Provider</CardTitle>
+            <CardTitle>{t('provider.title')}</CardTitle>
             <CardDescription>
-              Select your preferred AI provider
+              {t('provider.description')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -164,15 +184,15 @@ export default function SettingsPage() {
         {/* API Configuration */}
         <Card>
           <CardHeader>
-            <CardTitle>API Configuration</CardTitle>
+            <CardTitle>{t('api.title')}</CardTitle>
             <CardDescription>
-              Configure your {PROVIDERS[activeProvider].name} API settings
+              {t('api.description', { provider: PROVIDERS[activeProvider].name })}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* API Key */}
             <div className="space-y-2">
-              <Label htmlFor="apiKey">API Key</Label>
+              <Label htmlFor="apiKey">{t('api.apiKey')}</Label>
               <div className="flex gap-2">
                 <div className="relative flex-1">
                   <Input
@@ -180,7 +200,7 @@ export default function SettingsPage() {
                     type={showApiKey ? 'text' : 'password'}
                     value={localApiKey}
                     onChange={(e) => setLocalApiKey(e.target.value)}
-                    placeholder="Enter your API key"
+                    placeholder={t('api.apiKeyPlaceholder')}
                   />
                 </div>
                 <Button
@@ -193,13 +213,13 @@ export default function SettingsPage() {
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground">
-                Your API key is stored locally and never sent to our servers
+                {t('api.apiKeyHint')}
               </p>
             </div>
 
             {/* Base URL */}
             <div className="space-y-2">
-              <Label htmlFor="baseUrl">Base URL</Label>
+              <Label htmlFor="baseUrl">{t('api.baseUrl')}</Label>
               <Input
                 id="baseUrl"
                 type="url"
@@ -208,13 +228,13 @@ export default function SettingsPage() {
                 placeholder={PROVIDERS[activeProvider].defaultBaseUrl}
               />
               <p className="text-xs text-muted-foreground">
-                Default: {PROVIDERS[activeProvider].defaultBaseUrl}
+                {t('api.default')}: {PROVIDERS[activeProvider].defaultBaseUrl}
               </p>
             </div>
 
             {/* Save Button */}
             <Button onClick={handleSave} className="w-full">
-              Save Configuration
+              {t('api.saveConfig')}
             </Button>
           </CardContent>
         </Card>
@@ -222,9 +242,9 @@ export default function SettingsPage() {
         {/* Model Selection */}
         <Card>
           <CardHeader>
-            <CardTitle>Model Selection</CardTitle>
+            <CardTitle>{t('model.title')}</CardTitle>
             <CardDescription>
-              Choose the model to use for generation
+              {t('model.description')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -238,8 +258,8 @@ export default function SettingsPage() {
                   <SelectTrigger>
                     <SelectValue placeholder={
                       models.length === 0 
-                        ? "Fetch models first" 
-                        : "Select a model"
+                        ? t('model.fetchFirst')
+                        : t('model.selectModel')
                     } />
                   </SelectTrigger>
                   <SelectContent>
@@ -256,7 +276,7 @@ export default function SettingsPage() {
                 onClick={handleFetchModels}
                 disabled={isLoadingModels}
               >
-                {isLoadingModels ? 'Loading...' : 'Refresh'}
+                {isLoadingModels ? t('common.loading') : t('model.refresh')}
               </Button>
             </div>
             
@@ -266,7 +286,7 @@ export default function SettingsPage() {
             
             {models.length > 0 && (
               <p className="text-xs text-muted-foreground">
-                {models.length} models available
+                {t('model.modelsAvailable', { count: models.length })}
               </p>
             )}
           </CardContent>
@@ -275,23 +295,23 @@ export default function SettingsPage() {
         {/* Current Configuration Summary */}
         <Card>
           <CardHeader>
-            <CardTitle>Current Configuration</CardTitle>
+            <CardTitle>{t('currentConfig.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <dl className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <dt className="text-muted-foreground">Provider:</dt>
+                <dt className="text-muted-foreground">{t('currentConfig.provider')}:</dt>
                 <dd className="font-medium">{PROVIDERS[activeProvider].name}</dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-muted-foreground">API Key:</dt>
+                <dt className="text-muted-foreground">{t('currentConfig.apiKey')}:</dt>
                 <dd className="font-medium">
-                  {localApiKey ? '••••••••' + localApiKey.slice(-4) : 'Not configured'}
+                  {localApiKey ? '••••••••' + localApiKey.slice(-4) : t('currentConfig.notConfigured')}
                 </dd>
               </div>
               <div className="flex justify-between">
-                <dt className="text-muted-foreground">Model:</dt>
-                <dd className="font-medium">{selectedModel || 'Not selected'}</dd>
+                <dt className="text-muted-foreground">{t('currentConfig.model')}:</dt>
+                <dd className="font-medium">{selectedModel || t('currentConfig.notSelected')}</dd>
               </div>
             </dl>
           </CardContent>

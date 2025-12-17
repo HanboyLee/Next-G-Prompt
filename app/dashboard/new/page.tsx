@@ -6,8 +6,11 @@ import { PromptEditor } from "@/components/dashboard/prompt-editor"
 import { Button } from "@/components/ui/button"
 import { usePromptStore } from "@/store/use-prompt-store"
 import { createPrompt } from "@/app/actions/prompt"
+import { useTranslations } from 'next-intl'
 
 export default function NewPromptPage() {
+  const t = useTranslations('editor')
+  const tCommon = useTranslations('common')
   const router = useRouter()
   const [isSaving, setIsSaving] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -21,7 +24,7 @@ export default function NewPromptPage() {
     setIsSaving(true)
     try {
       const result = await createPrompt({
-        title: title || "Untitled Prompt",
+        title: title || t('untitled'),
         content,
         variables: JSON.stringify(variables),
         tags: `${settings.tone},${settings.format},${settings.role}`,
@@ -34,7 +37,7 @@ export default function NewPromptPage() {
         setError(result.error || "Failed to save prompt")
       }
     } catch (err) {
-      setError("An unexpected error occurred")
+      setError(t('unexpectedError'))
     } finally {
       setIsSaving(false)
     }
@@ -57,12 +60,12 @@ export default function NewPromptPage() {
       <header className="h-14 border-b flex items-center px-6 justify-between bg-white dark:bg-slate-900 shrink-0">
         <div className="flex items-center gap-3">
           <h1 className="font-semibold text-sm">
-            {title || "Untitled Prompt"}
+            {title || t('untitled')}
           </h1>
           {isDirty && (
             <span className="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-              Unsaved
+              {t('unsaved')}
             </span>
           )}
         </div>
@@ -74,19 +77,19 @@ export default function NewPromptPage() {
             disabled={!content}
             className="text-xs"
           >
-            {copied ? "✓ Copied!" : "📋 Copy"}
+            {copied ? t('copied') : t('copy')}
           </Button>
           <Button 
             variant="outline" 
             size="sm"
             onClick={() => {
-              if (isDirty && !confirm("Discard unsaved changes?")) return
+              if (isDirty && !confirm(t('discardConfirm'))) return
               reset()
               router.push("/dashboard")
             }}
             className="text-xs"
           >
-            Cancel
+            {tCommon('cancel')}
           </Button>
           <Button 
             size="sm"
@@ -94,7 +97,7 @@ export default function NewPromptPage() {
             disabled={isSaving || !content.trim()}
             className="text-xs px-4"
           >
-            {isSaving ? "Saving..." : "💾 Save Prompt"}
+            {isSaving ? t('saving') : t('savePrompt')}
           </Button>
         </div>
       </header>
@@ -105,7 +108,7 @@ export default function NewPromptPage() {
             onClick={() => setError(null)} 
             className="text-red-400 hover:text-red-600 text-sm"
           >
-            Dismiss
+            {tCommon('dismiss')}
           </button>
         </div>
       )}
@@ -115,4 +118,3 @@ export default function NewPromptPage() {
     </div>
   )
 }
-
